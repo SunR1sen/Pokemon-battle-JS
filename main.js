@@ -9,8 +9,6 @@ const character = {
   progressHP: document.getElementById('progressbar-character'),
   renderHP: renderHP,
   changeHP: changeHP,
-  renderHPLife: renderHPLife,
-  renderProgressBar: renderProgressBar,
 }
 
 const enemy = {
@@ -21,8 +19,6 @@ const enemy = {
   progressHP: document.getElementById('progressbar-enemy'),
   renderHP: renderHP,
   changeHP: changeHP,
-  renderHPLife: renderHPLife,
-  renderProgressBar: renderProgressBar,
 }
 
 $btn.addEventListener('click', () => {
@@ -51,8 +47,8 @@ function renderProgressBar() {
 }
 
 function renderHP() {
-  this.renderHPLife();
-  this.renderProgressBar();
+  renderHPLife.call(this);
+  renderProgressBar.call(this);
 }
 
 function changeHP(count) {
