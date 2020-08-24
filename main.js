@@ -43,7 +43,7 @@ function renderHPLife() {
 }
 
 function renderProgressBar() {
-  this.progressHP.style.width = this.damageHP + '%';
+  this.progressHP.style.width = this.damageHP / this.defaultHP * 100 + '%';
 }
 
 function renderHP() {
