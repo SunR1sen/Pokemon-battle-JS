@@ -7,6 +7,8 @@ const character = {
   damageHP: 100,
   elHP: document.getElementById('health-character'),
   progressHP: document.getElementById('progressbar-character'),
+  renderHP: renderHP,
+  changeHP: changeHP,
 }
 
 const enemy = {
@@ -15,53 +17,52 @@ const enemy = {
   damageHP: 100,
   elHP: document.getElementById('health-enemy'),
   progressHP: document.getElementById('progressbar-enemy'),
+  renderHP: renderHP,
+  changeHP: changeHP,
 }
 
 $btn.addEventListener('click', () => {
-  changeHP(random(20), character)
-  changeHP(random(20), enemy)
+  character.changeHP(random(20))
+  enemy.changeHP(random(20))
 })
 
 $clawBtn.addEventListener('click', () => {
-  changeHP(random(20), enemy)
+  enemy.changeHP(random(20))
 })
 
 function init() {
   console.log('Start game!');
-  renderHP(character);
-  renderHP(enemy);
+  character.renderHP();
+  enemy.renderHP();
 }
 
 
 
-function renderHPLife(person) {
-  person.elHP.innerText = person.damageHP + ' / ' + character.defaultHP;
+function renderHPLife() {
+  this.elHP.innerText = this.damageHP + ' / ' + this.defaultHP;
 }
 
-function renderProgressBar(person) {
-  person.progressHP.style.width = person.damageHP + '%';
+function renderProgressBar() {
+  this.progressHP.style.width = this.damageHP / this.defaultHP * 100 + '%';
 }
 
-function renderHP(person) {
-  renderHPLife(person);
-  renderProgressBar(person);
+function renderHP() {
+  renderHPLife.call(this);
+  renderProgressBar.call(this);
 }
 
-function changeHP(count, person) {
-  if ( person.damageHP < count ) {
-    person.damageHP = 0;
-    alert('Бедный ' + person.name + ' проиграл!')
+function changeHP(count) {
+  if ( this.damageHP < count ) {
+    this.damageHP = 0;
+    alert('Бедный ' + this.name + ' проиграл!')
     $btn.disabled = true;
     $clawBtn.disabled = true;
   } else {
-    person.damageHP -= count;
+    this.damageHP -= count;
   }
-  renderHP(person);
+  this.renderHP();
 }
 
-function attack(count, person) {
-
-}
 
 function random(max) {
   return Math.ceil(Math.random() * max);
