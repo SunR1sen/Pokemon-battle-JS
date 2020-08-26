@@ -63,7 +63,8 @@ function writeLog(log) {
 }
 
 function changeHP(count) {
-	const log = this === enemy ? generateLog(this, character, count, this.damageHP, this.defaultHP) : generateLog(this, enemy, count, this.damageHP, this.defaultHP);
+	const {name, damageHP, defaultHP} = this;
+	const log = this === enemy ? generateLog(this, character, count, damageHP, defaultHP) : generateLog(this, enemy, count, damageHP, defaultHP);
 	console.log(log);
 	writeLog(log);
 
@@ -71,7 +72,7 @@ function changeHP(count) {
 
 	if (this.damageHP <= 0) {
 		this.damageHP = 0;
-		alert('Бедный ' + this.name + ' проиграл!')
+		alert('Бедный ' + name + ' проиграл!')
 		$btn.disabled = true;
 		$clawBtn.disabled = true;
 	}
