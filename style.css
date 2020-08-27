@@ -186,7 +186,7 @@ body {
 .pokemon .details .hp .bar {
     border-radius: 50px;
     background: #073fa7;
-    border: 3.5px solid #00a3e2;
+    border: 4px solid #00a3e2;
     height: 18px;
     overflow: hidden;
 }
@@ -195,6 +195,7 @@ body {
     height: 100%;
     background: -webkit-gradient(linear, left top, right top, from(lime), to(#8bf500));
     background: linear-gradient(to right, lime, #8bf500);
+    transition: width 0.5s ease-in;
 }
 .pokemon .details .hp .bar .health.low {
     background: -webkit-gradient(linear, left top, right top, from(#ffcc00), to(#f1f500));
@@ -473,4 +474,12 @@ h1 {
 
 .action label {
     padding: 6px 0;
+}
+
+.logs {
+    margin: 0 15%;
+}
+
+.logs p {
+    margin: 5px;
 }
