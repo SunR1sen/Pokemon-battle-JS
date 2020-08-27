@@ -63,8 +63,13 @@ function writeLog(log) {
 }
 
 function changeHP(count) {
+<<<<<<< HEAD
 	const {name} = this;
 	const log = this === enemy ? generateLog(this, character, count) : generateLog(this, enemy, count);
+=======
+	const {name, damageHP, defaultHP} = this;
+	const log = this === enemy ? generateLog(this, character, count, damageHP, defaultHP) : generateLog(this, enemy, count, damageHP, defaultHP);
+>>>>>>> c6ed5741241d640de8365bcd1e3eb48813790ece
 	console.log(log);
 	writeLog(log);
 
