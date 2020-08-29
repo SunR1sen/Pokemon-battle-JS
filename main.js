@@ -1,5 +1,10 @@
 const $btn = document.getElementById('btn-kick');
 const $clawBtn = document.getElementById('btn-claw');
+const btnKickLeft = document.querySelector('#btn-kick-left');
+const btnClawLeft = document.querySelector('#btn-claw-left');
+
+let counterLeftKick = makeLeftCounter();
+let counterLeftClaw = makeLeftCounter();
 
 const character = {
 	name: 'Pikachu',
@@ -28,10 +33,20 @@ const enemy = {
 $btn.addEventListener('click', () => {
 	character.changeHP(random(20))
 	enemy.changeHP(random(20))
+	let leftCount = counterLeftKick();
+	changeInnerText(leftCount, btnKickLeft);
+	if (leftCount == 0) {
+		$btn.disabled = true;
+	}
 })
 
 $clawBtn.addEventListener('click', () => {
-	enemy.changeHP(random(20))
+	enemy.changeHP(random(10))
+	let leftCount = counterLeftClaw();
+	changeInnerText(leftCount, btnClawLeft);
+	if (leftCount == 0) {
+		$clawBtn.disabled = true;
+	}
 })
 
 function init() {
@@ -63,14 +78,10 @@ function writeLog(log) {
 }
 
 function changeHP(count) {
-<<<<<<< HEAD
 	const {name} = this;
+
 	const log = this === enemy ? generateLog(this, character, count) : generateLog(this, enemy, count);
-=======
-	const {name, damageHP, defaultHP} = this;
-	const log = this === enemy ? generateLog(this, character, count, damageHP, defaultHP) : generateLog(this, enemy, count, damageHP, defaultHP);
->>>>>>> c6ed5741241d640de8365bcd1e3eb48813790ece
-	console.log(log);
+
 	writeLog(log);
 
 	this.damageHP -= count;
@@ -85,16 +96,26 @@ function changeHP(count) {
 	this.renderHP();
 }
 
+function changeInnerText(text, element) {
+  element.innerText = text;
+}
+
+function makeLeftCounter() {
+  let count = 6;
+
+  return function () {
+    return --count;
+  };
+}
+
+
 
 function random(max) {
 	return Math.ceil(Math.random() * max);
 }
 
 function generateLog(firstPerson, secondPerson, count) {
-	if ( firstPerson.damageHP - count <= 0 ) {
-		firstPerson.damageHP = 0;
-	}
-
+	
 
 	const logs = [
 		`${firstPerson.name} вспомнил что-то важное, но неожиданно ${secondPerson.name}, не помня себя от испуга, ударил в предплечье врага. ${count} [${firstPerson.damageHP}/${firstPerson.defaultHP}]`,
