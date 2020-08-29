@@ -37,11 +37,16 @@
 
         <div class="control">
             <button class="button" id="btn-kick">
-                Thunder Jolt
-            </button>
+                <span class="button-name">Thunder Jolt</span>
+                <span class="button-count">Осталось нажатий:
+                   <span class="button-count-dig" id="btn-kick-left">6</span></span>
+              </button>
             <button class="button" id="btn-claw">
-                Claws Attack
+                <span class="button-name">Claws Attack</span>
+                <span class="button-count">Осталось нажатий:
+                    <span class="button-count-dig" id="btn-claw-left">6</span></span>
             </button>
+            
         </div>
 
         <div class="pokemon enemy">
@@ -62,9 +67,13 @@
             </div>
         </div>
     </div> <!-- ./playground-->
-    <div class="logs" id="logs">
-        
+    <h3>Лог боя:</h3>
+    <div class="logs-container">
+        <div class="logs" id="logs">
+
+        </div>
     </div>
+    
 </div>
 <div class="catch_screen"></div>
 
