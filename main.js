@@ -31,8 +31,8 @@ const enemy = {
 }
 
 $btn.addEventListener('click', () => {
-	character.changeHP(random(20))
-	enemy.changeHP(random(20))
+	character.changeHP(random(10, 20))
+	enemy.changeHP(random(10, 20))
 	let leftCount = counterLeftKick();
 	changeInnerText(leftCount, btnKickLeft);
 	if (leftCount == 0) {
@@ -41,7 +41,7 @@ $btn.addEventListener('click', () => {
 })
 
 $clawBtn.addEventListener('click', () => {
-	enemy.changeHP(random(10))
+	enemy.changeHP(random(5, 10))
 	let leftCount = counterLeftClaw();
 	changeInnerText(leftCount, btnClawLeft);
 	if (leftCount == 0) {
@@ -110,8 +110,9 @@ function makeLeftCounter() {
 
 
 
-function random(max) {
-	return Math.ceil(Math.random() * max);
+function random(min, max) {
+	let num = max - min;
+	return Math.ceil((Math.random() * num) + min);
 }
 
 function generateLog(firstPerson, secondPerson, count) {
@@ -130,7 +131,7 @@ function generateLog(firstPerson, secondPerson, count) {
 		`${firstPerson.name} пытался что-то сказать, но вдруг, неожиданно ${secondPerson.name} со скуки, разбил бровь сопернику. ${count} [${firstPerson.damageHP - count}/${firstPerson.defaultHP}]`
 	];
 
-	return logs[random(logs.length - 1)];
+	return logs[random(0,logs.length - 1)];
 
 
 }
