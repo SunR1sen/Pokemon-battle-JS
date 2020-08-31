@@ -3,8 +3,8 @@ const $clawBtn = document.getElementById('btn-claw');
 const btnKickLeft = document.querySelector('#btn-kick-left');
 const btnClawLeft = document.querySelector('#btn-claw-left');
 
-let counterLeftKick = makeLeftCounter();
-let counterLeftClaw = makeLeftCounter();
+let counterLeftKick = makeLeftCounter(8, btnKickLeft);
+let counterLeftClaw = makeLeftCounter(6, btnClawLeft);
 
 const character = {
 	name: 'Pikachu',
@@ -31,23 +31,27 @@ const enemy = {
 }
 
 $btn.addEventListener('click', () => {
-	character.changeHP(random(10, 20))
-	enemy.changeHP(random(10, 20))
-	let leftCount = counterLeftKick();
-	changeInnerText(leftCount, btnKickLeft);
-	if (leftCount == 0) {
-		$btn.disabled = true;
-	}
+	if (counterLeftKick() === 0) $btn.disabled = true;
+	character.changeHP(random(5, 10))
+	enemy.changeHP(random(5, 10))
+
 })
 
 $clawBtn.addEventListener('click', () => {
+	if (counterLeftClaw() === 0) $clawBtn.disabled = true;
 	enemy.changeHP(random(5, 10))
-	let leftCount = counterLeftClaw();
-	changeInnerText(leftCount, btnClawLeft);
-	if (leftCount == 0) {
-		$clawBtn.disabled = true;
-	}
-})
+});
+
+
+
+function makeLeftCounter(count = 6, el) {
+	el.innerText = count;
+  return function () {
+		el.innerText = --count;
+		// count--;
+    return count;
+  };
+}
 
 function init() {
 	console.log('Start game!');
@@ -79,9 +83,7 @@ function writeLog(log) {
 
 function changeHP(count) {
 	const {name} = this;
-
 	const log = this === enemy ? generateLog(this, character, count) : generateLog(this, enemy, count);
-
 	writeLog(log);
 
 	this.damageHP -= count;
@@ -96,17 +98,6 @@ function changeHP(count) {
 	this.renderHP();
 }
 
-function changeInnerText(text, element) {
-  element.innerText = text;
-}
-
-function makeLeftCounter() {
-  let count = 6;
-
-  return function () {
-    return --count;
-  };
-}
 
 
 
