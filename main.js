@@ -1,53 +1,47 @@
 import Pokemon from './pokemon.js';
 import { random, makeLeftCounter, writeLog, generateLog } from './utils.js';
+import { pokemons } from './pokemons.js';
+
+
+let pokemon1 = pokemons[random(0, pokemons.length - 1)];
+let pokemon2 = pokemons[random(0, pokemons.length - 1)];
+
 
 const player1 = new Pokemon({
-	name: 'Pikachu',
-	hp: 500,
-	type: 'electric',
-	selectors: 'character',
+	...pokemon1,
+	selectors: 'player1',
 });
 
 const player2 = new Pokemon({
-	name: 'Charmander',
-	hp: 450,
-	type: 'fire',
-	selectors: 'enemy',
+	...pokemon2,
+	selectors: 'player2',
 });
 
-const $btn = document.querySelector('#btn-kick');
-const $clawBtn = document.querySelector('#btn-claw');
-const btnKickLeft = document.querySelector('#btn-kick-left');
-const btnClawLeft = document.querySelector('#btn-claw-left');
-const counterLeftKick = makeLeftCounter(15, btnKickLeft);
-const counterLeftClaw = makeLeftCounter(10, btnClawLeft);
 
-$btn.addEventListener('click', () => {
-	if (counterLeftKick() === 0) $btn.disabled = true;
-	player1.changeHP(random(20, 100), function(count) {
-		writeLog(generateLog(player1, player2, count));
+
+const $control = document.querySelector('.control');
+const allButtons = document.querySelectorAll('.control .button');
+
+player1.attacks.forEach( item => {
+	const $btn = document.createElement('button');
+	$btn.classList.add('button');
+	$btn.innerText = item.name;
+	$control.appendChild($btn);
+
+	const btnCount = makeLeftCounter(item.maxCount, $btn)
+
+	$btn.addEventListener('click', () => {
+		btnCount();
+		let myDamage = random(item.minDamage, item.maxDamage);
+		let enemyDamage = random(player2.attacks[0].minDamage, player2.attacks[0].maxDamage);
+		player2.changeHP(myDamage);
+		writeLog(generateLog(player2, player1, myDamage));
+		player1.changeHP(enemyDamage);
+		writeLog(generateLog(player1, player2, enemyDamage));
 	});
-	player2.changeHP(random(20, 30), function(count) {
-		writeLog(generateLog(player2, player1, count));
-	});
 
-	if (player1.hp.current <= 0 || player2.hp.current <= 0) {
-		$btn.disabled = true;
-		$clawBtn.disabled = true;
-	}
-});
+})
 
-$clawBtn.addEventListener('click', () => {
-	if (counterLeftClaw() === 0) $clawBtn.disabled = true;
-	player2.changeHP(random(100, 150), function(count) {
-		writeLog(generateLog(player2, player1, count));
-	})
-
-	if (player2.hp.current <= 0) {
-		$btn.disabled = true;
-		$clawBtn.disabled = true;
-	}
-});
 
 function init() {
 	console.log('Start game!');

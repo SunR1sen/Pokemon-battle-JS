@@ -4,9 +4,14 @@ export function random(min, max) {
 }
 
 export function makeLeftCounter(count = 6, el) {
-	el.innerText = count;
+	let inner = el.innerText;
+	el.innerText = `${inner} (${count})`;
   return function () {
-		el.innerText = --count;
+		count--;
+		if (count == 0) {
+			el.disabled = true;
+		}
+		el.innerText =`${inner} (${count})`;
     return count;
   };
 }

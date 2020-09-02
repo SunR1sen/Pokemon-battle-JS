@@ -35,12 +35,13 @@ body {
 }
 
 .control {
-    width: 320px;
+    width: 500px;
     height: 260px;
     position: relative;
     margin: 20px;
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
 }
