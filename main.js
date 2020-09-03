@@ -32,15 +32,15 @@ player1.attacks.forEach( item => {
 
 	$btn.addEventListener('click', () => {
 		btnCount();
-		let myDamage = random(item.minDamage, item.maxDamage);
-		let enemyDamage = random(player2.attacks[0].minDamage, player2.attacks[0].maxDamage);
+		let myDamage = random(item.maxDamage, item.minDamage);
+		let enemyDamage = random(player2.attacks[0].maxDamage, player2.attacks[0].minDamage);
 		player2.changeHP(myDamage);
 		writeLog(generateLog(player2, player1, myDamage));
 		player1.changeHP(enemyDamage);
 		writeLog(generateLog(player1, player2, enemyDamage));
 
 		if (player2.hp.current <= 0) {
-			pokemon2 = pokemons[random(0, pokemons.length - 1)];
+			pokemon2 = pokemons[random(pokemons.length - 1)];
 			player2 = new Pokemon({
 				...pokemon2,
 				selectors: 'player2',
