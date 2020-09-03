@@ -1,6 +1,21 @@
-export function random(min, max) {
+export function random(max, min = 0) {
 	let num = max - min;
 	return Math.ceil((Math.random() * num) + min);
+}
+
+export function endGame(player1, $control) {
+	if (player1.hp.current <= 0) {
+		const allButtons = document.querySelectorAll('.control .button');
+		allButtons.forEach( item => item.remove());
+
+		let restartBtn = document.createElement('button');
+		restartBtn.classList.add('button');
+		restartBtn.innerText = 'Restart?';
+		$control.appendChild(restartBtn);
+		restartBtn.addEventListener('click', () => {
+			window.location.reload();
+		})
+	}
 }
 
 export function makeLeftCounter(count = 6, el) {
@@ -38,7 +53,7 @@ export function generateLog(firstPerson, secondPerson, count) {
 		`${firstPerson.name} пытался что-то сказать, но вдруг, неожиданно ${secondPerson.name} со скуки, разбил бровь сопернику. ${count} [${firstPerson.hp.current}/${firstPerson.hp.total}]`
 	];
 
-	return logs[random(0,logs.length - 1)];
+	return logs[random(logs.length - 1)];
 }
 
 
