@@ -3,8 +3,8 @@ import { random, makeLeftCounter, writeLog, generateLog, endGame } from './utils
 import { pokemons } from './pokemons.js';
 
 
-let pokemon1 = pokemons[random(0, pokemons.length - 1)];
-let pokemon2 = pokemons[random(0, pokemons.length - 1)];
+let pokemon1 = pokemons[random(pokemons.length - 1)];
+let pokemon2 = pokemons[random(pokemons.length - 1)];
 
 
 let player1 = new Pokemon({
