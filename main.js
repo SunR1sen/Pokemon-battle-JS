@@ -1,56 +1,78 @@
 import Pokemon from './pokemon.js';
 import { random, makeLeftCounter, writeLog, generateLog, endGame } from './utils.js';
-import { pokemons } from './pokemons.js';
-
-
-let pokemon1 = pokemons[random(pokemons.length - 1)];
-let pokemon2 = pokemons[random(pokemons.length - 1)];
-
-
-let player1 = new Pokemon({
-	...pokemon1,
-	selectors: 'player1',
-});
-
-let player2 = new Pokemon({
-	...pokemon2,
-	selectors: 'player2',
-});
+// import { pokemons } from './pokemons.js';
 
 
 
-const $control = document.querySelector('.control');
 
+class Game {
+	getPokemons = async () => {
+		const response = await fetch('https://reactmarathon-api.netlify.app/api/pokemons');
+		const body = await response.json();
+		return body;
+	}
 
-player1.attacks.forEach( item => {
-	const $btn = document.createElement('button');
-	$btn.classList.add('button');
-	$btn.innerText = item.name;
-	$control.appendChild($btn);
+	start = async () => {
+		const pokemons = await this.getPokemons();
+		console.log(pokemons);
 
-	const btnCount = makeLeftCounter(item.maxCount, $btn)
+		let pokemon1 = pokemons[random(pokemons.length - 1)];
+		let pokemon2 = pokemons[random(pokemons.length - 1)];
 
-	$btn.addEventListener('click', () => {
-		btnCount();
-		let myDamage = random(item.maxDamage, item.minDamage);
-		let enemyDamage = random(player2.attacks[0].maxDamage, player2.attacks[0].minDamage);
-		player2.changeHP(myDamage);
-		writeLog(generateLog(player2, player1, myDamage));
-		player1.changeHP(enemyDamage);
-		writeLog(generateLog(player1, player2, enemyDamage));
+		let player1 = new Pokemon({
+			...pokemon1,
+			selectors: 'player1',
+		});
 
-		if (player2.hp.current <= 0) {
-			pokemon2 = pokemons[random(pokemons.length - 1)];
-			player2 = new Pokemon({
-				...pokemon2,
-				selectors: 'player2',
-			});
-		}
+		let player2 = new Pokemon({
+			...pokemon2,
+			selectors: 'player2',
+		});
 
-		endGame(player1, $control);
 		
-	});
-})
+
+
+
+		const $control = document.querySelector('.control');
+
+
+		player1.attacks.forEach(item => {
+			const $btn = document.createElement('button');
+			$btn.classList.add('button');
+			$btn.innerText = item.name;
+			$control.appendChild($btn);
+
+			const btnCount = makeLeftCounter(item.maxCount, $btn)
+
+			$btn.addEventListener('click', () => {
+				btnCount();
+				let myDamage = random(item.maxDamage, item.minDamage);
+				let enemyDamage = random(player2.attacks[0].maxDamage, player2.attacks[0].minDamage);
+				player2.changeHP(myDamage);
+				writeLog(generateLog(player2, player1, myDamage));
+				player1.changeHP(enemyDamage);
+				writeLog(generateLog(player1, player2, enemyDamage));
+
+				if (player2.hp.current <= 0) {
+					pokemon2 = pokemons[random(pokemons.length - 1)];
+					player2 = new Pokemon({
+						...pokemon2,
+						selectors: 'player2',
+					});
+				}
+
+				endGame(player1, $control);
+
+			});
+		})
+	}
+}
+
+const game = new Game();
+game.start();
+
+
+
 
 
 
