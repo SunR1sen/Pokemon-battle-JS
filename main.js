@@ -23,7 +23,7 @@ class Game {
 	}
 
 	getDamage = async (player1ID, attackID, player2ID) => {
-		const response = fetch(`https://reactmarathon-api.netlify.app/api/fight?player1id=${player1ID}&attackId=${attackID}&player2id=1`);
+		const response = fetch(`https://reactmarathon-api.netlify.app/api/fight?player1id=${player1ID}&attackId=${attackID}&player2id=${player2ID}`);
 		const damage = (await response).json();
 		return damage;
 	}
