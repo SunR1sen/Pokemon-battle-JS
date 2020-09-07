@@ -16,6 +16,12 @@ class Game {
 
 	}
 
+	getDamage = async (player1ID, attackID, player2ID) => {
+		const response = fetch(`https://reactmarathon-api.netlify.app/api/fight?player1id=${player1ID}&attackId=${attackID}&player2id=1`);
+		const damage = (await response).json();
+		return damage;
+	}
+
 	start = async () => {
 		const pokemons = await this.getPokemons();
 
@@ -42,10 +48,13 @@ class Game {
 
 			const btnCount = makeLeftCounter(item.maxCount, $btn)
 
-			$btn.addEventListener('click', () => {
+			$btn.addEventListener('click', async () => {
+				let damage = await this.getDamage(pokemon1.id, item.id, pokemon2.id);
+				console.log(damage);
+				
 				btnCount();
-				let myDamage = random(item.maxDamage, item.minDamage);
-				let enemyDamage = random(player2.attacks[0].maxDamage, player2.attacks[0].minDamage);
+				let myDamage = damage.kick.plyaer1;
+				let enemyDamage = damage.kick.player2;
 				player2.changeHP(myDamage);
 				writeLog(generateLog(player2, player1, myDamage));
 				player1.changeHP(enemyDamage);
