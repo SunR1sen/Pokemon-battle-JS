@@ -111,7 +111,7 @@ class Game extends Selectors {
         allButtons.forEach(item => item.remove());
         const newBtn = document.createElement('div');
         newBtn.className = 'button';
-        newBtn.innerHTML = `Игра оконченна<br>Начать заново`;
+        newBtn.innerHTML = `Игра окончена<br>Играть заново?`;
         this.control.appendChild(newBtn);
         newBtn.addEventListener('click', this.begin);
     };
