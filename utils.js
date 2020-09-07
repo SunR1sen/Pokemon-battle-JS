@@ -1,39 +1,43 @@
-export function random(min, max) {
-	let num = max - min;
-	return Math.ceil((Math.random() * num) + min);
-}
+const logsDiv = document.querySelector('#logs');
 
-export function makeLeftCounter(count = 6, el) {
-	el.innerText = count;
-  return function () {
-		el.innerText = --count;
-    return count;
-  };
-}
+function random(max, min = 0) {
+    const num = max - min;
+    return Math.ceil(Math.random() * num) + min;
+};
 
-export function writeLog(log) {
-	const div = document.querySelector('#logs');
-	let p = document.createElement('p');
-	p.innerText = log;
-	div.insertBefore(p, div.children[0]);
-}
+function countBtn(count = 6, el) {
+    const text = el.textContent;
+    el.textContent = `${text} (${count})`;
+    return function () {
+        count--;
+        if (count === 0) {
+            el.disabled = true;
+        }
+        el.textContent = `${text} (${count})`;
+        return count;
+    }
+};
 
-export function generateLog(firstPerson, secondPerson, count) {
+function generateLog(firstPerson, secondPerson, damage) {
+    const { name: firstName, hp: { current, total } } = secondPerson;
+    const { name: secondName } = firstPerson;
 
-	const logs = [
-		`${firstPerson.name} вспомнил что-то важное, но неожиданно ${secondPerson.name}, не помня себя от испуга, ударил в предплечье врага. ${count} [${firstPerson.hp.current}/${firstPerson.hp.total}]`,
-		`${firstPerson.name} поперхнулся, и за это ${secondPerson.name} с испугу приложил прямой удар коленом в лоб врага. ${count} [${firstPerson.hp.current}/${firstPerson.hp.total}]`,
-		`${firstPerson.name} забылся, но в это время наглый ${secondPerson.name}, приняв волевое решение, неслышно подойдя сзади, ударил. ${count} [${firstPerson.hp.current}/${firstPerson.hp.total}]`,
-		`${firstPerson.name} пришел в себя, но неожиданно ${secondPerson.name} случайно нанес мощнейший удар. ${count} [${firstPerson.hp.current}/${firstPerson.hp.total}]`,
-		`${firstPerson.name} поперхнулся, но в это время ${secondPerson.name} нехотя раздробил кулаком \<вырезанно цензурой\> противника. ${count} [${firstPerson.hp.current}/${firstPerson.hp.total}]`,
-		`${firstPerson.name} удивился, а ${secondPerson.name} пошатнувшись влепил подлый удар. ${count} [${firstPerson.hp.current}/${firstPerson.hp.total}]`,
-		`${firstPerson.name} высморкался, но неожиданно ${secondPerson.name} провел дробящий удар. ${count} [${firstPerson.hp.current}/${firstPerson.hp.total}]`,
-		`${firstPerson.name} пошатнулся, и внезапно наглый ${secondPerson.name} беспричинно ударил в ногу противника. ${count} [${firstPerson.hp.current}/${firstPerson.hp.total}]`,
-		`${firstPerson.name} расстроился, как вдруг, неожиданно ${secondPerson.name} случайно влепил стопой в живот соперника. ${count} [${firstPerson.hp.current}/${firstPerson.hp.total}]`,
-		`${firstPerson.name} пытался что-то сказать, но вдруг, неожиданно ${secondPerson.name} со скуки, разбил бровь сопернику. ${count} [${firstPerson.hp.current}/${firstPerson.hp.total}]`
-	];
+    const logs = [
+        `${firstName} вспомнил что-то важное, но неожиданно ${secondName}, не помня себя от испуга, ударил в предплечье врага.`,
+        `${firstName} поперхнулся, и за это ${secondName} с испугу приложил прямой удар коленом в лоб врага.`,
+        `${firstName} забылся, но в это время наглый ${secondName}, приняв волевое решение, неслышно подойдя сзади, ударил.`,
+        `${firstName} пришел в себя, но неожиданно ${secondName} случайно нанес мощнейший удар.`,
+        `${firstName} поперхнулся, но в это время ${secondName} нехотя раздробил кулаком \<вырезанно цензурой\> противника.`,
+        `${firstName} удивился, а ${secondName} пошатнувшись влепил подлый удар.`,
+        `${firstName} высморкался, но неожиданно ${secondName} провел дробящий удар.`,
+        `${firstName} пошатнулся, и внезапно наглый ${secondName} беспричинно ударил в ногу противника.`,
+        `${firstName} расстроился, как вдруг, неожиданно ${secondName} случайно влепил стопой в живот соперника.`,
+        `${firstName} пытался что-то сказать, но вдруг, неожиданно ${secondName} со скуки, разбил бровь сопернику.`
+    ];
 
-	return logs[random(0,logs.length - 1)];
-}
+    const p = document.createElement('p');
+    p.textContent = logs[random(logs.length) - 1] + ` -${damage}, [${current}/${total}]`;
+    logsDiv.insertBefore(p, logsDiv.children[0]);
+};
 
-
+export { random, countBtn, generateLog };
