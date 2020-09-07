@@ -1,4 +1,4 @@
-import { pokemons } from './pokemons.js';
+// import { pokemons } from './pokemons.js';
 import Pokemon from './pokemon.js';
 import { random, countBtn } from './utils.js';
 
@@ -15,7 +15,14 @@ class Game extends Selectors {
 
     };
 
-    begin = () => {
+    getPokemons = async () => {
+        const response = fetch('https://reactmarathon-api.netlify.app/api/pokemons');
+        const body = (await response).json();
+        return body;
+    }
+
+    begin = async () => {
+        const pokemons = await this.getPokemons();
         this.playground.textContent = '';
         this.logDiv.textContent = '';
         pokemons.forEach(item => {
@@ -37,7 +44,8 @@ class Game extends Selectors {
 
     };
 
-    start = (name) => {
+    start = async (name) => {
+        const pokemons = await this.getPokemons();
         this.playground.textContent = '';
         let p1 = pokemons.find(item => item.name === name);
         let p2 = pokemons[random(pokemons.length - 1)];
@@ -94,7 +102,8 @@ class Game extends Selectors {
         });
     };
 
-    changeOpponent = () => {
+    changeOpponent = async () => {
+        const pokemons = await this.getPokemons();
         let p2 = pokemons[random(pokemons.length - 1)];
         this.player2 = this.createPlayer(p2, 'player2');
     };
