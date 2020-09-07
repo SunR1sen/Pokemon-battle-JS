@@ -1,82 +1,57 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Pokemon Fight</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-<div class="body">
-    <header>
-        <img class="logo"
-             title="Reset Game"
-             src="./assets/Pokemon_logo.png"
-             alt="Pokemon">
-    </header>
-    <div class="playground">
-        <div class="pokemon player1">
-            <span class="lvl">Lv. 1</span>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Pokemon Fight</title>
+        <link rel="shortcut icon" href="./assets/pokemon.png" type="image/png" />
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div class="body">
+            <header>
+                <img class="logo" title="Reset Game" src="./assets/Pokemon_logo.png" alt="Pokemon" />
+            </header>
+            <div class="playground">
+                <div class="pokemon player1">
+                    <!-- <span class="lvl">Lv. 1</span>
 
-            <img src="http://sify4321.000webhostapp.com/pikachu.png" class="sprite" id="img-player1">
+                    <img src="http://sify4321.000webhostapp.com/pikachu.png" class="sprite img-player1" />
 
-            <div class="details">
-                <h2 class="name" id="name-player1">
-                    Pikachu
-                </h2>
-                <div class="hp">
-                    <div class="bar">
-                        <div class="health" id="progressbar-player1" style="width: 100%;"></div>
-                    </div>
-                    <span class="text" id="health-player1">100 / 100</span>
+                    <div class="details">
+                        <h2 class="name" id="name-player1">Pikachu</h2>
+                        <div class="hp">
+                            <div class="bar">
+                                <div class="health" id="progressbar-player1" style="width: 100%"></div>
+                            </div>
+                            <span class="text" id="health-player1">100 / 100</span>
+                        </div>
+                    </div> -->
+                </div>
+
+                <div class="control"></div>
+
+                <div class="pokemon player2">
+                    <!-- <span class="lvl">Lv. 1</span>
+
+                    <img src="http://sify4321.000webhostapp.com/charmander.png" class="sprite img-player2" />
+
+                    <div class="details">
+                        <h2 class="name" id="name-player2">Charmander</h2>
+                        <div class="hp">
+                            <div class="bar">
+                                <div class="health" id="progressbar-player2" style="width: 100%"></div>
+                            </div>
+                            <span class="text" id="health-player2">100 / 100</span>
+                        </div>
+                    </div> -->
                 </div>
             </div>
+            <div id="logs" class="logs"></div>
         </div>
+        <div class="catch_screen"></div>
 
-        <div class="control">
-            <!-- <button class="button" id="btn-kick">
-                <span class="button-name">Thunder Jolt</span>
-                <span class="button-count">Осталось нажатий:
-                   <span class="button-count-dig" id="btn-kick-left"></span></span>
-              </button> -->
-            <!-- <button class="button" id="btn-claw">
-                <span class="button-name">Claws Attack</span>
-                <span class="button-count">Осталось нажатий:
-                    <span class="button-count-dig" id="btn-claw-left">6</span></span>
-            </button> -->
-            
-        </div>
-
-        <div class="pokemon player2">
-            <span class="lvl">Lv. 1</span>
-
-            <img src="http://sify4321.000webhostapp.com/charmander.png" class="sprite" id="img-player2">
-
-            <div class="details">
-                <h2 class="name" id="name-player2">
-                    Charmander
-                </h2>
-                <div class="hp">
-                    <div class="bar">
-                        <div class="health" id="progressbar-player2" style="width: 100%;"></div>
-                    </div>
-                    <span class="text" id="health-player2">100 / 100</span>
-                </div>
-            </div>
-        </div>
-    </div> <!-- ./playground-->
-    <h3>Лог боя:</h3>
-    <div class="logs-container">
-        <div class="logs" id="logs">
-
-        </div>
-    </div>
-    
-</div>
-<div class="catch_screen"></div>
-
-<script src="main.js" type="module"></script>
-</body>
+        <script src="main.js" type="module"></script>
+    </body>
 </html>

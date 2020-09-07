@@ -1,76 +1,83 @@
-class Selectors {
-	constructor(name) {
-		this.elHP = document.getElementById(`health-${name}`);
-		this.elProgressBar = document.getElementById(`progressbar-${name}`);
-		this.charName = document.getElementById(`name-${name}`);
-		this.charImg = document.getElementById(`img-${name}`);
-	}
+import { random, generateLog } from './utils.js';
+import game from './main.js';
 
+class Selectors {
+    constructor(name) {
+        this.elHp = document.querySelector(`#health-${name}`);
+        this.elProgressbar = document.querySelector(`#progressbar-${name}`);
+        this.elImg = document.querySelector(`.img-${name}`);
+        this.elName = document.querySelector(`#name-${name}`);
+        this.lvl = document.querySelector(`.${name} .lvl`);
+    };
 }
 
 class Pokemon extends Selectors {
-	constructor({ name, hp, type, selectors, attacks = [], img }) {
-		super(selectors);
+    constructor({ name, hp, type, attacks = [], img, selectors }) {
+        super(selectors);
+        this.name = name;
+        this.type = type;
+        this.hp = {
+            current: hp,
+            total: hp,
+        };
+        this.attacks = attacks;
+        this.elImg.src = img;
+        this.elName.textContent = name;
+        this.selectors = selectors;
 
-		this.name = name;
-		this.hp = {
-			current: hp,
-			total: hp,
-		};
-		this.type = type;
-		this.attacks = attacks;
-		this.img = img;
+        this.renderHp();
+    };
 
-		this.renderHP();
-		this.renderPokemon();
-	}
+    doHit = (opponent, btn) => {
+        const { hp, renderHp } = opponent;
+        const { maxDamage, minDamage } = btn;
+        const count = random(maxDamage, minDamage);
+        hp.current -= count;
 
-	renderPokemon = () => {
-		this.charName.innerText = this.name;
-		this.charImg.src = this.img;
-	}
+        if (hp.current <= 0) {
+            hp.current = 0;
+            if (opponent.selectors === 'player2') {
+                game.changeOpponent();
+                let newLvl = Number(this.lvl.textContent.slice(-1));
+                newLvl++;
+                this.lvl.textContent = 'Lv. ' + newLvl;
+                renderHp();
+                generateLog(this, opponent, count);
+                return true;
+            } else {
+                game.over();
+                renderHp();
+                generateLog(this, opponent, count);
+                return false;
+            }
+        }
 
+        renderHp();
+        generateLog(this, opponent, count);
+    };
 
-	renderHPLife = () => {
-		const { elHP, hp: { current, total } } = this;
+    renderHp = () => {
+        const { elHp, elProgressbar: bar, hp: { current, total } } = this;
+        let percent = current / (total / 100);
 
-		elHP.innerText = current + ' / ' + total;
-	}
+        elHp.textContent = current + ' / ' + total;
+        bar.style.width = percent + '%';
+        this.changeColor(percent, bar);
+    };
 
-	renderProgressBar = () => {
-		const { elProgressBar, hp: { current, total } } = this;
+    changeColor = (percent, bar) => {
+        let red, green;
 
-		elProgressBar.style.width = current / total * 100 + '%';
-	}
+        if (percent > 50) {
+            green = 255;
+            red = 255 / 50 * (100 - percent);
+        } else {
+            red = 255;
+            green = 255 / 50 * percent;
+        }
 
-	renderHP = () => {
-		this.renderHPLife();
-		this.renderProgressBar();
-		
-		if (this.hp.current > 60) {
-			this.elProgressBar.classList.remove('low');
-			this.elProgressBar.classList.remove('critical');
-		}	else if (this.hp.current <= 60 && this.hp.current >= 20) {
-			this.elProgressBar.classList.add('low');
-		} else if (this.hp.current < 20) {
-			this.elProgressBar.classList.remove('low');
-			this.elProgressBar.classList.add('critical');
-		} 
-	}
-
-	changeHP = (count, cb) => {
-		this.hp.current -= count;
-		
-
-		if (this.hp.current <= 0) {
-			this.hp.current = 0;
-			alert(`${this.name} проиграл!`)
-		}
-
-		this.renderHP();
-		cb && cb(count);
-	}
-
+        bar.style.background = `rgb(${red},${green},0)`;
+    };
 }
 
 export default Pokemon;
