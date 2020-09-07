@@ -13,7 +13,14 @@ class Game {
 	}
 
 	begin = () => {
-
+		const btn = document.createElement('button');
+		btn.classList.add('button');
+		btn.innerText = 'Начать игру';
+		document.querySelector('.control').appendChild(btn);
+		btn.addEventListener('click', () => {
+			this.start();
+			btn.remove();
+		})
 	}
 
 	getDamage = async (player1ID, attackID, player2ID) => {
@@ -76,7 +83,7 @@ class Game {
 }
 
 const game = new Game();
-game.start();
+game.begin();
 
 
 
