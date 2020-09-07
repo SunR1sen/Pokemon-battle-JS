@@ -12,9 +12,12 @@ class Game {
 		return body;
 	}
 
+	begin = () => {
+
+	}
+
 	start = async () => {
 		const pokemons = await this.getPokemons();
-		console.log(pokemons);
 
 		let pokemon1 = pokemons[random(pokemons.length - 1)];
 		let pokemon2 = pokemons[random(pokemons.length - 1)];
@@ -29,12 +32,7 @@ class Game {
 			selectors: 'player2',
 		});
 
-		
-
-
-
 		const $control = document.querySelector('.control');
-
 
 		player1.attacks.forEach(item => {
 			const $btn = document.createElement('button');
