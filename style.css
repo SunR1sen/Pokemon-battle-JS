@@ -513,3 +513,8 @@ h1 {
 .logs p {
     margin: 5px;
 }
+
+#player1Card,
+#player2Card {
+    display: none;
+}
