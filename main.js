@@ -17,6 +17,8 @@ class Game {
 		btn.innerText = 'Начать игру';
 		document.querySelector('.control').appendChild(btn);
 		btn.addEventListener('click', () => {
+			document.getElementById('player1Card').style.display = 'block';
+			document.getElementById('player2Card').style.display = 'block';
 			this.start();
 			btn.remove();
 		})
