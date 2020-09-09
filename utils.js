@@ -3,21 +3,6 @@ export function random(max, min = 0) {
 	return Math.ceil((Math.random() * num) + min);
 }
 
-export function endGame(player1, $control) {
-	if (player1.hp.current <= 0) {
-		const allButtons = document.querySelectorAll('.control .button');
-		allButtons.forEach( item => item.remove());
-
-		let restartBtn = document.createElement('button');
-		restartBtn.classList.add('button');
-		restartBtn.innerText = 'Restart?';
-		$control.appendChild(restartBtn);
-		restartBtn.addEventListener('click', () => {
-			window.location.reload();
-		})
-	}
-}
-
 export function makeLeftCounter(count = 6, el) {
 	let inner = el.innerText;
 	el.innerText = `${inner} (${count})`;
