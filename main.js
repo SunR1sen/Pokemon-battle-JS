@@ -60,8 +60,8 @@ class Game {
 				let damage = await this.getDamage(pokemon1.id, item.id, pokemon2.id);
 				
 				btnCount();
-				let myDamage = damage.kick.player1;
-				let enemyDamage = damage.kick.player2;
+				let myDamage = damage.kick.player2;
+				let enemyDamage = damage.kick.player1;
 				player2.changeHP(myDamage);
 				writeLog(generateLog(player2, player1, myDamage));
 				player1.changeHP(enemyDamage);
@@ -108,23 +108,4 @@ function init() {
 }
 
 init();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
