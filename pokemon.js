@@ -4,6 +4,7 @@ class Selectors {
 		this.elProgressBar = document.getElementById(`progressbar-${name}`);
 		this.charName = document.getElementById(`name-${name}`);
 		this.charImg = document.getElementById(`img-${name}`);
+		this.lvl = document.querySelector('#myLvl');
 	}
 
 }

@@ -19,6 +19,7 @@ export function makeLeftCounter(count = 6, el) {
 export function writeLog(log) {
 	const div = document.querySelector('#logs');
 	let p = document.createElement('p');
+	p.classList.add('logItem');
 	p.innerText = log;
 	div.insertBefore(p, div.children[0]);
 }
